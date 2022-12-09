@@ -3,6 +3,8 @@ const bcryptjs = require("bcryptjs");
 const multer = require("multer")
 const {v4 : uuidv4} = require('uuid')
 
+const User = require('../models/user.model');
+const saltRounds = 10;
 
 const DIR = './public/'
 
@@ -19,7 +21,6 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        console.log("Cam in upload");
         if(file.mimetype == "application/pdf"){
             cb(null, true);
         } else{
@@ -29,10 +30,8 @@ const upload = multer({
     }
 })
 
-const uploadSingleImage = upload.single("profileImg");
+const uploadSingleFile = upload.single("resumeFile");
 
-const User = require('../models/user.model');
-const saltRounds = 10;
 
 const dummyRecords = require("../dummy_data");
 const e = require("express");
@@ -96,7 +95,7 @@ router.get("/api/students",async function(req, res){
 
 router.post("/api/signup", async function(req, res){
     console.log(req.body);
-    uploadSingleImage(req, res, async (ferr) => {
+    uploadSingleFile(req, res, async (ferr) => {
         if(ferr){
             res.send({
                 code: 0,
@@ -130,7 +129,7 @@ router.post("/api/signup", async function(req, res){
                     else{
                         res.send({
                             code: 0,
-                            msg: "Email already exists" + err.toString(),
+                            msg: "Email id already exists",
                             data: null
                         })
                     }
@@ -138,7 +137,7 @@ router.post("/api/signup", async function(req, res){
             } catch (e) {
               res.send({
                 code: 0,
-                msg: "Something went wrong " + e.toString()
+                msg: "Something went wrong"
               })
             }
 
@@ -148,7 +147,7 @@ router.post("/api/signup", async function(req, res){
     
 })
 
-router.get("/api/user/:id",async function(req,res){
+router.get("/api/user/:id", async function(req,res){
   try {
     var user = await User.findOne({_id:req.params.id});
       res.send({
@@ -166,28 +165,28 @@ router.get("/api/user/:id",async function(req,res){
 });
 
 
-router.post("/api/login",async function(req,res){
+router.post("/api/login", async function(req,res){
   try {
     var user = await User.findOne({email:req.body.email});
     var hash = await bcryptjs.compare(req.body.password, user.password)
     if(hash){
       res.send({
         code:1,
-        msg:"login successfull",
+        msg: "login successfull",
         data:user
       })
     }
     else{
       res.send({
         code:0,
-        msg:"Password Incorrect",
+        msg: "Incorrect Password",
         data:null
       })
     }
   } catch (e) {
     res.send({
       code:0,
-      msg:"User not found",
+      msg: "User doesnt exist",
       data:null
     })
   }
