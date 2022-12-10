@@ -76,7 +76,19 @@ router.get("/api/dbinit", (req, res) => {
 
 router.get("/api/students",async function(req, res){
     try {
-      var users  = await User.find({userType: {$ne: "Staff"}});
+      var users  = await User.find({
+        $and: [
+            {
+                userType: {$ne: "Staff"}
+            },
+            {
+                "resume.uploadedAt": {
+                    $ne: null
+                }
+            }
+        ]
+        
+    });
       res.send({
         code:1,
         msg:"all users",
