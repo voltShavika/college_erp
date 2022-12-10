@@ -32,6 +32,7 @@ function App() {
     <CollegeContext.Provider value={{
       loginStatus: loginStatus,
       user: user,
+      setUser: setUser,
       students: students,
       login: login,
       logout: logout,

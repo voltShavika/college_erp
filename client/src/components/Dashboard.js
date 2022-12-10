@@ -16,10 +16,10 @@ export default function Dashboard() {
       }
       <Navbar/>
       {
-        user.userType == 'Staff' && <StaffProfile/>
+        user && user.userType == 'Staff' && <StaffProfile/>
       }
       {
-        user.userType == 'Student' && <StudentProfile/>
+        user && user.userType == 'Student' && <StudentProfile/>
       }
       
     </>

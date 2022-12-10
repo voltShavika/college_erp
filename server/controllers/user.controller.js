@@ -94,7 +94,6 @@ router.get("/api/students",async function(req, res){
   
 
 router.post("/api/signup", async function(req, res){
-    console.log(req.body);
     uploadSingleFile(req, res, async (ferr) => {
         if(ferr){
             res.send({
@@ -147,22 +146,86 @@ router.post("/api/signup", async function(req, res){
     
 })
 
-router.get("/api/user/:id", async function(req,res){
-  try {
-    var user = await User.findOne({_id:req.params.id});
-      res.send({
-        code:1,
-        msg:"hello user",
-        data:user
-      })
-  } catch (e) {
-    res.send({
-      code:0,
-      msg:"not found",
-      data:null
-    });
-  }
+router.post("/api/user/:id", async function(req,res){
+    uploadSingleFile(req, res, async (ferr) => {
+        if(ferr){
+            res.send({
+                code: 0,
+                msg: "Only .pdf files are supported",
+                data: null
+            })
+        }
+        else{
+            try {
+                const url = req.protocol + '://' + req.get('host')
+                const user = await User.findOne({_id: req.params.id})
+                user.name = req.body.name;
+                user.number = req.body.number;
+                if(req.hasOwnProperty("file")){
+                    user.resume.url = url + '/public/' + req.file.filename
+                    user.resume.uploadedAt = new Date();
+                }
+                user.save(err => {
+                    if(!err){
+                        res.send({
+                            code: 1,
+                            msg: "User Updated",
+                            data: user
+                        })
+                    }
+                    else{
+                        res.send({
+                            code: 0,
+                            msg: "User could not be updated. Please try again later",
+                            data: null
+                        })
+                    }
+                })
+
+            } catch (e) {
+                res.send({
+                    code: 0,
+                    msg: "Something went Wrong. Please Login again",
+                    data: null
+                })
+              
+            }
+
+        }
+
+    })
 });
+
+router.post("/api/change_password/:id", async (req, res) => {
+    try{
+        const user = await User.findOne({_id: req.params.id})
+        var hash = await bcryptjs.hash(req.body.password, saltRounds);
+        user.password = hash;
+        user.save(err => {
+            if(!err){
+                res.send({
+                    code: 1,
+                    msg: "Password Changed Succesfully",
+                    data: user
+                })
+            }
+            else{
+                res.send({
+                    code: 0,
+                    msg: "Something went wrong. Try again later",
+                    data: null
+                })
+            }
+        })
+    }
+    catch(e){
+        res.send({
+            code: 0,
+            msg: "Something went wrong. Try again later",
+            data: null
+        })
+    }
+})
 
 
 router.post("/api/login", async function(req,res){
