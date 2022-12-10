@@ -16,9 +16,10 @@ function App() {
   const [loginStatus, setLoginStatus] = useState(false);
   const [user, setUser] = useState(null);
   const [students, setStudents] = useState([]);
-  const login = (loggedInUser) => {
+  const login = (loggedInUser, navigate) => {
     setUser({...loggedInUser});
     setLoginStatus(true);
+    navigate("/dashboard");
   }
 
   const logout = (navigate) => {

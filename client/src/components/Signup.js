@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom';
+import CollegeContext from '../Context/CollegeContext';
 
 const validateFormFields = (iName, iEmail, iNumber, iPass) => {
   const errors = [];
@@ -20,6 +22,8 @@ const validateFormFields = (iName, iEmail, iNumber, iPass) => {
 
 export default function Signup() {
 
+  const context = useContext(CollegeContext);
+
   const [errors, setErrors] = useState([]);
   const [resumeFile, setResumeFile] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,6 +32,8 @@ export default function Signup() {
   const emailRef = useRef();
   const numberRef = useRef();
   const passRef = useRef();
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setResumeFile(e.target.files[0])
@@ -50,8 +56,8 @@ export default function Signup() {
       formData.append('number', iNumber);
       axios.post("http://localhost:8000/api/signup", formData, {}).then(res => {
         if(res.data.code == 1){
-          alert("YAYAYAY User Created")
-          console.log(res.data.data);
+          setErrors([]);
+          context.login(res.data.data, navigate);
         }
         else{
           formErrors.push(res.data.msg);

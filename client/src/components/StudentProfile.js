@@ -195,9 +195,11 @@ export default function StudentProfile() {
                 
                 <form onSubmit={handlePassSubmit}>
                   <div className="mb-3">
+                    <label>Enter new password</label>
                     <input ref={pass1Ref} type="password" className="form-control"/>
                   </div>
                   <div className="mb-3">
+                  <label>Re-enter new password</label>
                     <input ref={pass2Ref} type="password" className="form-control"/>
                   </div>
                   <div className='text-center'>
@@ -213,9 +215,7 @@ export default function StudentProfile() {
           <div className='card text-center' style={{height: "100%"}}>
             {
               (user.hasOwnProperty('resume') && user.resume.url.length > 0)? 
-              <object data={user.resume.url} type="application/pdf" width="100%" height="100%">
-                  <p>Alternative text - include a link <a href={user.resume.url}>to the PDF!</a></p>
-              </object>
+              <iframe src={user.resume.url} width="100%" height="100%"></iframe>
               :<h3 className='mt-5'>No Resume uploaded</h3>
             }
           </div>

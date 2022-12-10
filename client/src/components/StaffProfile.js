@@ -28,7 +28,7 @@ export default function StaffProfile() {
     return (
         <div className="container-fluid bg-light" style={{height: "100vh"}}>
             <div className='row p-5'>
-                <div className='col-md-7'>
+                <div className='col-md-7 col-sm-12'>
                     <div className='ps-1'>
                         <h4 className='mt-3'>Students Upload History</h4>
                     </div>
@@ -78,14 +78,14 @@ export default function StaffProfile() {
                         </div>
                     }
                 </div>
-                <div className='col-md-5'>
+                <div className='col-md-5 col-sm-12'>
                     <div className='ps-1'>
                         <h4 className='mt-3'>Resume Preview</h4>
                     </div>
                     <hr/>
                     {
                         selectedUser?
-                        <iframe src={selectedUser.resume.url}  width="100%" height="120%"></iframe>
+                        <iframe src={selectedUser.resume.url}  width="100%" height="550px"></iframe>
                         :<p>Please Select a user </p>
                     }
 

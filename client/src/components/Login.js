@@ -39,8 +39,7 @@ export default function Login() {
             }).then((res) => {
                 if(res.data.code == 1){
                     setErrors([]);
-                    context.login(res.data.data);
-                    navigate("/dashboard")
+                    context.login(res.data.data, navigate);
                 }
                 else{
                     formErrors.push(res.data.msg);
