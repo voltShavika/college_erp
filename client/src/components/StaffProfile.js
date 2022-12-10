@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
 import CollegeContext from '../Context/CollegeContext'
 
+import { GET_STUDENTS_API } from '../api';
+
 export default function StaffProfile() {
 
     const {students, setStudents} = useContext(CollegeContext);
@@ -10,7 +12,7 @@ export default function StaffProfile() {
 
     useEffect(()=>{
         setLoading(true);
-        axios.get("http://localhost:8000/api/students").then(res => {
+        axios.get(GET_STUDENTS_API).then(res => {
             if(res.data.code == 1){
                 setStudents([...res.data.data]);
             }

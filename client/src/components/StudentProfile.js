@@ -2,6 +2,8 @@ import React, { useContext, useState, useRef } from 'react'
 import axios from 'axios'
 import CollegeContext from '../Context/CollegeContext'
 
+import { USER_UPDATE_API, CHANGE_PASSWORD_API } from '../api'
+
 const validateFormFields = (iName, iNumber) => {
   const errors = [];
   if(iName.length < 1){
@@ -54,7 +56,7 @@ export default function StudentProfile() {
       formData.append('resumeFile', resumeFile);
       formData.append('name', iName);
       formData.append('number', iNumber);
-      axios.post(`http://localhost:8000/api/user/${user._id}`, formData, {}).then(res => {
+      axios.post(`${USER_UPDATE_API}${user._id}`, formData, {}).then(res => {
         if(res.data.code == 1){
           setUser(res.data.data);
           console.log(res.data.data);
@@ -85,7 +87,7 @@ export default function StudentProfile() {
     if(formErrors.length < 1){
       console.log("In here");
       setPassLoading(true);
-      axios.post(`http://localhost:8000/api/change_password/${user._id}`, {
+      axios.post(`${CHANGE_PASSWORD_API}${user._id}`, {
         password: newPass
       }).then(res => {
         if(res.data.code == 1){

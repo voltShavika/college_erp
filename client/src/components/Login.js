@@ -3,7 +3,7 @@ import axios from 'axios'
 import CollegeContext from '../Context/CollegeContext';
 import {useNavigate} from 'react-router-dom'
 
-import logo from '../images/logo.png'
+import { LOGIN_API } from '../api';
 
 const validateFormFields = (iEmail, iPass) => {
     const errors = [];
@@ -35,7 +35,7 @@ export default function Login() {
         const formErrors = validateFormFields(iEmail, iPass)
         if(formErrors.length <= 0){
             setLoading(false);
-            axios.post("http://localhost:8000/api/login", {
+            axios.post(LOGIN_API, {
                 email: iEmail,
                 password: iPass
             }).then((res) => {

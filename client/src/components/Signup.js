@@ -3,6 +3,8 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom';
 import CollegeContext from '../Context/CollegeContext';
 
+import { SIGNUP_API } from '../api';
+
 const validateFormFields = (iName, iEmail, iNumber, iPass) => {
   const errors = [];
   if(iName.length < 1){
@@ -54,7 +56,7 @@ export default function Signup() {
       formData.append('email', iEmail);
       formData.append('password', iPass);
       formData.append('number', iNumber);
-      axios.post("http://localhost:8000/api/signup", formData, {}).then(res => {
+      axios.post(SIGNUP_API, formData, {}).then(res => {
         if(res.data.code == 1){
           setErrors([]);
           context.login(res.data.data, navigate);
