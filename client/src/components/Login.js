@@ -1,5 +1,7 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import axios from 'axios'
+import CollegeContext from '../Context/CollegeContext';
+import {useNavigate} from 'react-router-dom'
 
 const validateFormFields = (iEmail, iPass) => {
     const errors = [];
@@ -14,6 +16,10 @@ const validateFormFields = (iEmail, iPass) => {
   }
 
 export default function Login() {
+
+    const navigate = useNavigate();
+
+    const context = useContext(CollegeContext);
     const [errors, setErrors] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -32,8 +38,9 @@ export default function Login() {
                 password: iPass
             }).then((res) => {
                 if(res.data.code == 1){
-                    alert("YAYYYAYA");
                     setErrors([]);
+                    context.login(res.data.data);
+                    navigate("/dashboard")
                 }
                 else{
                     formErrors.push(res.data.msg);

@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import {useNavigate} from 'react-router-dom';
+import CollegeContext from '../Context/CollegeContext'
 
 export default function Navbar() {
+  const {loginStatus, logout} = useContext(CollegeContext);
+
+  const navigate = useNavigate();
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container-fluid">
@@ -10,9 +15,13 @@ export default function Navbar() {
             </button>
             <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav">
-                <li className="nav-item">
-                    <a className="nav-link" aria-current="page" href="#">Home</a>
-                </li>
+                {
+                  loginStatus && 
+                  <li className="nav-item">
+                    <button className='btn btn-warning' onClick={()=> logout(navigate)}>Logout</button>
+                  </li>
+                }
+                
             </ul>
             </div>
         </div>
