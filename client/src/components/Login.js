@@ -3,6 +3,8 @@ import axios from 'axios'
 import CollegeContext from '../Context/CollegeContext';
 import {useNavigate} from 'react-router-dom'
 
+import logo from '../images/logo.png'
+
 const validateFormFields = (iEmail, iPass) => {
     const errors = [];
     
@@ -61,7 +63,7 @@ export default function Login() {
     return (
     <div>
         <div className='text-center'>
-            <h3 className='mt-3'>Login to College</h3>
+            <img className='img' src={require("../images/logo.png")} height="100" width="150" />
         </div>
         <div className='p-5'>
             {
@@ -95,7 +97,7 @@ export default function Login() {
                     <input ref={passRef}  type="password" className="form-control" placeholder='Enter your password' />
                 </div>
                 <div className='text-center'>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Login</button>
                 </div>
             </form>
         </div>

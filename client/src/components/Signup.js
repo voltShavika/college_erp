@@ -79,7 +79,7 @@ export default function Signup() {
   return (
     <div>
       <div className='text-center'>
-        <h3 className='mt-3'>Signup to College</h3>
+      <img className='img' src={require("../images/logo.png")} height="100" width="150" />
       </div>
       <div className='p-5'>
         {
@@ -124,7 +124,7 @@ export default function Signup() {
             <input type="file" onChange={handleChange} placeholder="Select Your Resume" accept="application/pdf"/>
           </div>
           <div className='text-center'>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <button type="submit" className="btn btn-primary">Register</button>
           </div>
         </form>
       </div>
