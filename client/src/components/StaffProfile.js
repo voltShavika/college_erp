@@ -6,14 +6,17 @@ export default function StaffProfile() {
 
     const {students, setStudents} = useContext(CollegeContext);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
+        setLoading(true);
         axios.get("http://localhost:8000/api/students").then(res => {
             if(res.data.code == 1){
                 setStudents([...res.data.data]);
             }
+            setLoading(false);
         }).catch(err => {
-
+            setLoading(false);
         })
     },[])
 
@@ -30,39 +33,50 @@ export default function StaffProfile() {
                         <h4 className='mt-3'>Students Upload History</h4>
                     </div>
                     <hr/>
-                    <div className='card pb-2'>
-                        <table className="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Number</th>
-                                <th scope="col">Resume</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    students.map((student, i) => {
-                                        let date = new Date(student.resume.uploadedAt);
-                                        return (
-                                            <tr key={i}>
-                                                <th scope="row">{i+1}</th>
-                                                <td>{student.name}</td>
-                                                <td>{student.email}</td>
-                                                <td>{student.number}</td>
-                                                <td>
-                                                    <button className='btn btn-primary' onClick={()=> handleResumeClick(i)}>
-                                                        {date.toLocaleString()}
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                    {
+                        loading
+                        ?
+                            <div className='text-center'>
+                                <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <br/><br/>
+                            </div>
+                        :
+                        <div className='card pb-2'>
+                            <table className="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Number</th>
+                                    <th scope="col">Resume</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        students.map((student, i) => {
+                                            let date = new Date(student.resume.uploadedAt);
+                                            return (
+                                                <tr key={i}>
+                                                    <th scope="row">{i+1}</th>
+                                                    <td>{student.name}</td>
+                                                    <td>{student.email}</td>
+                                                    <td>{student.number}</td>
+                                                    <td>
+                                                        <button className='btn btn-primary' onClick={()=> handleResumeClick(i)}>
+                                                            {date.toLocaleString()}
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
                 <div className='col-md-5'>
                     <div className='ps-1'>
