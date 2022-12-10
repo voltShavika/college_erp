@@ -33,3 +33,24 @@ NOTE: If your node server is not running `http://localhost:8000`. then make sure
 NOTE: All Form fields have Basic form validations.
 
 Thats all!!!
+
+#### 1. Landing Page
+<img src="./screenshots/login.png" height="300"/>
+
+#### 2. Signup Tab
+<img src="./screenshots/signup.png" height="300"/>
+
+#### 3. Form Validations
+<img src="./screenshots/signup_val.png" height="300"/>
+
+#### 4. Student Login In case on No Resume
+<img src="./screenshots/no_resume.png" height="300"/>
+
+#### 5. Student Login In case on  Resume Uploaded
+<img src="./screenshots/resume_user.png" height="300"/>
+
+#### 6. Admin Login Landing
+<img src="./screenshots/admin_landing.png" height="300"/>
+
+#### 7. Admin Resume Selected
+<img src="./screenshots/admin_resume.png" height="300"/>
